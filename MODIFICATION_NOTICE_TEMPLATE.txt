@@ -1,0 +1,47 @@
+================================================================================
+MODIFICATION NOTICE TEMPLATE
+
+When you modify any UxPlay source files, add this notice at the top of the file
+(after any existing copyright notices):
+
+================================================================================
+
+/*
+ * Modified for Pentagram project
+ * Copyright (C) 2025 [Your Name]
+ * Date: [Modification Date]
+ *
+ * Changes made:
+ * - [Describe your changes here]
+ *
+ * This file is based on UxPlay:
+ * https://github.com/FDH2/UxPlay
+ * Original file licensed under GNU GPL v3
+ *
+ * This modified version is also licensed under GNU GPL v3.
+ * See LICENSE file in the project root for details.
+ */
+
+================================================================================
+
+Example for a specific file:
+
+/*
+ * Modified for Pentagram project
+ * Copyright (C) 2025 Mark Cipolla
+ * Date: 2025-12-17
+ *
+ * Changes made:
+ * - Added JNI wrapper functions for Java integration
+ * - Modified initialization sequence for Android compatibility
+ * - Added error handling for mobile environments
+ *
+ * This file is based on UxPlay raop.c:
+ * https://github.com/FDH2/UxPlay
+ * Original file licensed under GNU GPL v3
+ *
+ * This modified version is also licensed under GNU GPL v3.
+ * See LICENSE file in the project root for details.
+ */
+
+================================================================================
