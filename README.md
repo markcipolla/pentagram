@@ -32,6 +32,15 @@ An Android AirPlay receiver that allows you to stream video from macOS and iOS d
 ```bash
 # View real-time logs from the app
 ./logs.sh
+
+# Or use the enhanced log viewer
+./watch-logs.sh
+
+# Clear logs before watching
+./watch-logs.sh --clear
+
+# Filter for specific content
+./watch-logs.sh --filter "ERROR"
 ```
 
 ### Using the App
@@ -163,6 +172,29 @@ pentagram/
 - **Native Implementation**: Uses RPiPlay's proven decryption code
 
 ## Development
+
+### Automated Testing
+
+Pentagram includes automated testing scripts to close the feedback loop during development:
+
+```bash
+# Quick test with manual screen mirroring
+./test-loop.sh
+
+# Full automated test (deploys, triggers mirroring, monitors logs)
+./full-test-loop.sh --auto-trigger --duration 60 --keep-logs
+
+# Watch logs only (no deployment)
+./watch-logs.sh --clear
+```
+
+See [TESTING.md](TESTING.md) for detailed testing documentation.
+
+**Typical Development Workflow:**
+1. Make code changes
+2. Run `./full-test-loop.sh --auto-trigger --keep-logs`
+3. Review logs and video streaming
+4. Iterate
 
 ### Building from Source
 
