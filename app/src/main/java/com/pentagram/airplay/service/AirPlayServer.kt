@@ -9,6 +9,7 @@ import com.dd.plist.NSNumber
 import com.dd.plist.PropertyListParser
 import com.pentagram.airplay.AirPlayReceiverActivity
 import com.pentagram.airplay.MainActivity
+import com.pentagram.airplay.MainActivity.ConnectionState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -331,6 +332,9 @@ class AirPlayServer(
     }
 
     private fun handleInfo(output: OutputStream, headers: Map<String, String>) {
+        // Note: Don't set CONNECTING here - /info is called repeatedly for discovery
+        // The CONNECTING state is set when actual connection flow starts (handleSetup with ekey)
+
         // Get actual device display metrics in current orientation
         val windowManager = context.getSystemService(android.content.Context.WINDOW_SERVICE) as android.view.WindowManager
         val displayMetrics = android.util.DisplayMetrics()
@@ -453,6 +457,7 @@ class AirPlayServer(
 
     private fun handlePairSetup(output: OutputStream, headers: Map<String, String>, body: ByteArray) {
         Log.i(TAG, "Pair setup - body length: ${body.size}")
+        MainActivity.updateConnectionState(ConnectionState.PAIRING, deviceName ?: "Mac")
 
         if (body.size != 32) {
             Log.e(TAG, "Invalid pair-setup data size: ${body.size}")
@@ -678,6 +683,8 @@ class AirPlayServer(
 
             if (ekeyData != null && eivData != null) {
                 Log.i(TAG, "First SETUP call - initializing encryption keys")
+                // THIS is when a real connection starts (not just /info discovery)
+                MainActivity.updateConnectionState(ConnectionState.CONNECTING, deviceName ?: "Mac")
 
                 // Decrypt the ekey using FairPlay to get the actual 16-byte AES key
                 val decryptedKey = fairplay.decryptKey(ekeyData)
@@ -780,6 +787,7 @@ class AirPlayServer(
                                         onDisconnected = {
                                             Log.i(TAG, "Video stream disconnected - closing receiver activity")
                                             AirPlayReceiverActivity.finishCurrentActivity()
+                                            MainActivity.updateConnectionState(ConnectionState.DISCONNECTED)
                                         }
                                     )
                                     Log.i(TAG, "VideoStreamReceiver created, starting on port $videoPort...")
@@ -822,6 +830,7 @@ class AirPlayServer(
                                             try {
                                                 context.startActivity(intent)
                                                 Log.w(TAG, "✅ Launched AirPlayReceiverActivity directly")
+                                                MainActivity.updateConnectionState(ConnectionState.STREAMING, deviceName ?: "Mac")
                                             } catch (e: Exception) {
                                                 Log.e(TAG, "Direct launch failed: ${e.message}")
 
@@ -1030,6 +1039,7 @@ class AirPlayServer(
                                 onDisconnected = {
                                     Log.i(TAG, "Video stream disconnected - closing receiver activity")
                                     AirPlayReceiverActivity.finishCurrentActivity()
+                                    MainActivity.updateConnectionState(ConnectionState.DISCONNECTED)
                                 }
                             )
 
@@ -1057,6 +1067,7 @@ class AirPlayServer(
                                     }
                                     context.startActivity(intent)
                                     Log.w(TAG, "✅ Launched AirPlayReceiverActivity in ${if (isScreenMirroring) "mirror" else "extended"} mode")
+                                    MainActivity.updateConnectionState(ConnectionState.STREAMING, deviceName ?: "Mac")
                                 } catch (e: Exception) {
                                     Log.e(TAG, "❌ Failed to launch AirPlayReceiverActivity", e)
                                 }

@@ -7,4 +7,7 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+    <color name="background_dark">#FF040610</color>
+    <color name="button_default">#FF880C00</color>
+    <color name="button_pressed">#FFD82816</color>
 </resources>

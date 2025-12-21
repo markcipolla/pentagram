@@ -8,24 +8,36 @@ import android.util.Log
 import android.os.Build
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.button.MaterialButton
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.pentagram.airplay.service.AirPlayService
 import com.pentagram.airplay.service.AirPlayCryptoNative
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var toggleServiceButton: ImageButton
+    private lateinit var toggleServiceButton: MaterialButton
     private lateinit var statusText: TextView
     private lateinit var deviceNameText: TextView
     private lateinit var pinText: TextView
     private lateinit var pinLabelText: TextView
     private lateinit var instructionsText: TextView
+    private lateinit var wizardImage: ImageView
 
     private var isServiceRunning = false
+    private var connectionState = ConnectionState.DISCONNECTED
+    private var connectedDeviceName: String? = null
+
+    enum class ConnectionState {
+        DISCONNECTED,
+        CONNECTING,
+        PAIRING,
+        STREAMING
+    }
 
     companion object {
         private const val NOTIFICATION_PERMISSION_REQUEST_CODE = 1001
@@ -44,6 +56,12 @@ class MainActivity : AppCompatActivity() {
                 currentActivity?.clearPin()
             }
         }
+
+        fun updateConnectionState(state: ConnectionState, deviceName: String? = null) {
+            currentActivity?.runOnUiThread {
+                currentActivity?.setConnectionState(state, deviceName)
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +74,13 @@ class MainActivity : AppCompatActivity() {
         pinText = findViewById(R.id.pinText)
         pinLabelText = findViewById(R.id.pinLabelText)
         instructionsText = findViewById(R.id.instructionsText)
+        wizardImage = findViewById(R.id.wizardImage)
+
+        // Load the wizard GIF with Glide
+        Glide.with(this)
+            .asGif()
+            .load(R.drawable.wizard_pentagram)
+            .into(wizardImage)
 
         // Register this activity for PIN display
         currentActivity = this
@@ -122,20 +147,57 @@ class MainActivity : AppCompatActivity() {
         updateUI()
     }
 
+    private fun setConnectionState(state: ConnectionState, deviceName: String? = null) {
+        connectionState = state
+        connectedDeviceName = deviceName
+        updateUI()
+    }
+
     private fun updateUI() {
         val deviceName = android.os.Build.MODEL ?: "Unknown Device"
-        if (isServiceRunning) {
-            toggleServiceButton.setImageResource(android.R.drawable.ic_media_pause)
-            toggleServiceButton.contentDescription = getString(R.string.stop_service)
-            statusText.text = getString(R.string.service_running)
-            deviceNameText.text = "Device name: ⛧ $deviceName"
-            instructionsText.text = "Look for '⛧ $deviceName' in your macOS screen mirroring menu when the service is running."
-        } else {
-            toggleServiceButton.setImageResource(android.R.drawable.ic_media_play)
-            toggleServiceButton.contentDescription = getString(R.string.start_service)
+
+        if (!isServiceRunning) {
+            toggleServiceButton.text = getString(R.string.start_service)
+            toggleServiceButton.isEnabled = true
             statusText.text = getString(R.string.service_stopped)
             deviceNameText.text = ""
             instructionsText.text = "Start the service to begin advertising as an AirPlay receiver."
+            return
+        }
+
+        // Service is running - show state based on connection
+        when (connectionState) {
+            ConnectionState.DISCONNECTED -> {
+                toggleServiceButton.text = getString(R.string.stop_service)
+                toggleServiceButton.isEnabled = true
+                statusText.text = getString(R.string.service_running)
+                deviceNameText.text = ""
+                instructionsText.text = "Look for '⛧ $deviceName' in your macOS screen mirroring menu."
+            }
+            ConnectionState.CONNECTING -> {
+                toggleServiceButton.text = "Connecting..."
+                toggleServiceButton.isEnabled = false
+                statusText.text = "Device connecting"
+                val client = connectedDeviceName ?: "Unknown"
+                deviceNameText.text = "From: $client"
+                instructionsText.text = "Establishing connection..."
+            }
+            ConnectionState.PAIRING -> {
+                toggleServiceButton.text = "Pairing..."
+                toggleServiceButton.isEnabled = false
+                statusText.text = "Pairing in progress"
+                val client = connectedDeviceName ?: "Unknown"
+                deviceNameText.text = "From: $client"
+                instructionsText.text = "Verifying device..."
+            }
+            ConnectionState.STREAMING -> {
+                toggleServiceButton.text = getString(R.string.stop_service)
+                toggleServiceButton.isEnabled = true
+                statusText.text = "Streaming"
+                val client = connectedDeviceName ?: "Unknown"
+                deviceNameText.text = "Connected to: $client"
+                instructionsText.text = "Screen mirroring active"
+            }
         }
     }
 
