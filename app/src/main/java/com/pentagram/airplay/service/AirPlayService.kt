@@ -7,12 +7,14 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.net.nsd.NsdManager
 import android.net.nsd.NsdServiceInfo
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.core.app.ServiceCompat
 import com.pentagram.airplay.MainActivity
 import com.pentagram.airplay.R
 import kotlinx.coroutines.CoroutineScope
@@ -135,8 +137,13 @@ class AirPlayService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.d(TAG, "AirPlay Service started")
 
-        // Start as foreground service
-        startForeground(NOTIFICATION_ID, createNotification())
+        // Start as foreground service with connected device type (for network streaming)
+        ServiceCompat.startForeground(
+            this,
+            NOTIFICATION_ID,
+            createNotification(),
+            ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE
+        )
 
         // Start AirPlay server
         serviceScope.launch {

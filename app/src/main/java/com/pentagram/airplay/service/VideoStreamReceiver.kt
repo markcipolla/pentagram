@@ -30,7 +30,8 @@ class VideoStreamReceiver(
     private val width: Int = 1920,
     private val height: Int = 1080,
     private val encryptionKey: ByteArray? = null,
-    private val streamConnectionID: Long = 0
+    private val streamConnectionID: Long = 0,
+    private val onDisconnected: (() -> Unit)? = null
 ) {
     companion object {
         private const val TAG = "VideoStreamReceiver"
@@ -277,6 +278,12 @@ class VideoStreamReceiver(
             }
         } finally {
             Log.i(TAG, "Video stream ended. Total packets: $packetCount")
+
+            // Notify listener that stream has disconnected
+            if (isRunning) {
+                Log.i(TAG, "Notifying disconnection callback...")
+                onDisconnected?.invoke()
+            }
         }
     }
 

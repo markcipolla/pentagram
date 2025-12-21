@@ -776,7 +776,11 @@ class AirPlayServer(
                                         width = deviceWidth,
                                         height = deviceHeight,
                                         encryptionKey = videoEncryptionKey,
-                                        streamConnectionID = streamConnectionID ?: 0
+                                        streamConnectionID = streamConnectionID ?: 0,
+                                        onDisconnected = {
+                                            Log.i(TAG, "Video stream disconnected - closing receiver activity")
+                                            AirPlayReceiverActivity.finishCurrentActivity()
+                                        }
                                     )
                                     Log.i(TAG, "VideoStreamReceiver created, starting on port $videoPort...")
 
@@ -1021,7 +1025,13 @@ class AirPlayServer(
 
                             // Start video stream receiver on a random available port
                             videoPort = findAvailablePort()
-                            videoReceiver = VideoStreamReceiver(isScreenMirroring)
+                            videoReceiver = VideoStreamReceiver(
+                                isScreenMirroring = isScreenMirroring,
+                                onDisconnected = {
+                                    Log.i(TAG, "Video stream disconnected - closing receiver activity")
+                                    AirPlayReceiverActivity.finishCurrentActivity()
+                                }
+                            )
 
                             if (videoReceiver!!.start(videoPort)) {
                                 Log.i(TAG, "✅ Video receiver started on port $videoPort")

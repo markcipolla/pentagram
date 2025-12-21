@@ -35,6 +35,13 @@ class AirPlayReceiverActivity : AppCompatActivity() {
         fun updateVideoDimensions(width: Int, height: Int) {
             currentInstance?.updateVideoSize(width, height)
         }
+
+        fun finishCurrentActivity() {
+            Log.i(TAG, "finishCurrentActivity() called - closing receiver activity")
+            currentInstance?.runOnUiThread {
+                currentInstance?.finish()
+            }
+        }
     }
 
     private lateinit var surfaceView: AspectRatioSurfaceView
