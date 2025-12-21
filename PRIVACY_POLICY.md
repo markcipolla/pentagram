@@ -1,6 +1,6 @@
 # Privacy Policy for Pentagram
 
-**Last updated: December 2024**
+**Last updated: December 2025**
 
 ## Overview
 
@@ -42,7 +42,7 @@ Pentagram does not integrate with any third-party services, analytics platforms,
 ## Open Source
 
 Pentagram is open-source software licensed under GPL v3. You can review the complete source code to verify our privacy practices:
-[GitHub Repository URL]
+https://github.com/markcipolla/pentagram
 
 ## Children's Privacy
 
@@ -54,8 +54,8 @@ We may update this privacy policy from time to time. Any changes will be reflect
 
 ## Contact
 
-If you have questions about this privacy policy, please open an issue on our GitHub repository or contact us at:
-[Your Contact Email]
+If you have questions about this privacy policy, please open an issue on our GitHub repository:
+https://github.com/markcipolla/pentagram/issues
 
 ---
 
