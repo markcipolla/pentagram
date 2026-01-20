@@ -1,10 +1,11 @@
 package com.pentagram.airplay
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 /**
  * Activity to display legal information and GPL v3 license notices.
@@ -23,47 +24,62 @@ class LegalInfoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Create a simple scrollable TextView to display legal info
-        val textView = TextView(this).apply {
-            setPadding(32, 32, 32, 32)
-            textSize = 12f
-            setTextIsSelectable(true)
-        }
-
-        setContentView(textView)
-
-        // Load legal info from raw resource
-        try {
-            val inputStream = resources.openRawResource(R.raw.legal_info)
-            val reader = BufferedReader(InputStreamReader(inputStream))
-            val legalText = reader.readText()
-            reader.close()
-
-            textView.text = legalText
-        } catch (e: Exception) {
-            textView.text = """
-                PENTAGRAM - LEGAL INFORMATION
-
-                Copyright (C) 2025 Pentagram Contributors
-
-                This program is free software licensed under the GNU General Public License v3.
-
-                Source code available at:
-                https://github.com/markcipolla/pentagram
-
-                For full license text, visit:
-                https://www.gnu.org/licenses/gpl-3.0.html
-
-                Error loading detailed legal information: ${e.message}
-            """.trimIndent()
-        }
+        setContentView(R.layout.activity_legal_info)
 
         // Set title
-        title = "Legal Information"
+        title = "About"
 
         // Enable back button in action bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        // Set app version
+        val versionText = findViewById<TextView>(R.id.appVersionText)
+        try {
+            val versionName = packageManager.getPackageInfo(packageName, 0).versionName
+            versionText.text = "Version $versionName"
+        } catch (e: Exception) {
+            versionText.text = "Version Unknown"
+        }
+
+        // Set up click listeners
+        findViewById<LinearLayout>(R.id.licenseItem).setOnClickListener {
+            startActivity(Intent(this, LicenseActivity::class.java))
+        }
+
+        // Third-party software click listeners
+        findViewById<LinearLayout>(R.id.rpiplayItem).setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/FD-/RPiPlay"))
+            startActivity(intent)
+        }
+
+        findViewById<LinearLayout>(R.id.uxplayItem).setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/FDH2/UxPlay"))
+            startActivity(intent)
+        }
+
+        findViewById<LinearLayout>(R.id.playfairItem).setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/FDH2/UxPlay"))
+            startActivity(intent)
+        }
+
+        findViewById<LinearLayout>(R.id.llhttpItem).setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/nodejs/llhttp"))
+            startActivity(intent)
+        }
+
+        findViewById<LinearLayout>(R.id.privacyPolicyItem).setOnClickListener {
+            startActivity(Intent(this, PrivacyPolicyActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.reportIssuesItem).setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/markcipolla/pentagram/issues"))
+            startActivity(intent)
+        }
+
+        findViewById<LinearLayout>(R.id.sourceCodeItem).setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/markcipolla/pentagram"))
+            startActivity(intent)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

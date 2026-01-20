@@ -7,7 +7,19 @@ components to you under the GNU General Public License v3.
 
 ================================================================================
 
-1. UxPlay - AirPlay Mirror and Audio Server
+1. RPiPlay - Raspberry Pi AirPlay Mirroring Server
+   https://github.com/FD-/RPiPlay
+
+   Copyright (C) RPiPlay Contributors
+
+   Licensed under the GNU General Public License v3.
+   See LICENSE file for full license text.
+
+   Used for: Mirror buffer decryption, packet handling, and FairPlay implementation.
+
+================================================================================
+
+2. UxPlay - AirPlay Mirror and Audio Server
    https://github.com/FDH2/UxPlay
 
    Copyright (C) UxPlay Contributors
@@ -15,9 +27,11 @@ components to you under the GNU General Public License v3.
    Licensed under the GNU General Public License v3.
    See LICENSE file for full license text.
 
+   Used for: Protocol insights, RTSP handling, and extended display support.
+
 ================================================================================
 
-2. playfair - FairPlay library
+3. playfair - FairPlay library
    Part of UxPlay (lib/playfair)
 
    Licensed under the GNU General Public License v3.
@@ -25,7 +39,7 @@ components to you under the GNU General Public License v3.
 
 ================================================================================
 
-3. llhttp - HTTP parser
+4. llhttp - HTTP parser
    Part of UxPlay (lib/llhttp)
    https://github.com/nodejs/llhttp
 

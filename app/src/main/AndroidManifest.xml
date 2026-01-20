@@ -48,13 +48,6 @@
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
 
-        <!-- Settings Activity -->
-        <activity
-            android:name=".SettingsActivity"
-            android:exported="false"
-            android:label="@string/settings"
-            android:theme="@style/Theme.Pentagram.ActionBar" />
-
         <!-- Help Activity -->
         <activity
             android:name=".HelpActivity"
@@ -73,6 +66,12 @@
             android:name=".LegalInfoActivity"
             android:exported="false"
             android:label="@string/legal_info"
+            android:theme="@style/Theme.Pentagram.ActionBar" />
+
+        <!-- License Activity -->
+        <activity
+            android:name=".LicenseActivity"
+            android:exported="false"
             android:theme="@style/Theme.Pentagram.ActionBar" />
 
         <!-- AirPlay Service -->

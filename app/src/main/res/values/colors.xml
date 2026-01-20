@@ -17,13 +17,10 @@
     <color name="button_default">#FF880C00</color>
     <color name="button_pressed">#FFD82816</color>
 
-    <!-- Adaptive colors (light theme defaults, overridden in values-night) -->
-    <color name="background_adaptive">@color/background_light</color>
-    <color name="text_primary">@color/black</color>
-    <color name="text_secondary">#FF757575</color>
-    <color name="card_background">#FFFFFFFF</color>
-    <color name="divider">#FFE0E0E0</color>
-
-    <!-- Settings specific -->
-    <color name="settings_icon_tint">#FF880C00</color>
+    <!-- Dark theme colors (always dark mode) -->
+    <color name="background_adaptive">@color/background_dark</color>
+    <color name="text_primary">@color/white</color>
+    <color name="text_secondary">#FFAAAAAA</color>
+    <color name="card_background">#FF1A1A2E</color>
+    <color name="divider">#FF333344</color>
 </resources>

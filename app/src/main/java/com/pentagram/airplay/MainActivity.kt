@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -66,11 +67,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Apply saved theme before super.onCreate
-        preferencesManager = PreferencesManager(this)
-        preferencesManager.applyTheme()
-
         super.onCreate(savedInstanceState)
+
+        preferencesManager = PreferencesManager(this)
 
         // Check if onboarding needs to be shown
         if (!preferencesManager.isOnboardingCompleted) {
@@ -80,6 +79,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         setContentView(R.layout.activity_main)
+
+        // Setup toolbar
+        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
         toggleServiceButton = findViewById(R.id.toggleServiceButton)
         statusText = findViewById(R.id.statusText)
@@ -253,10 +256,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_settings -> {
-                startActivity(Intent(this, SettingsActivity::class.java))
-                true
-            }
             R.id.action_about -> {
                 startActivity(Intent(this, LegalInfoActivity::class.java))
                 true

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Adaptive colors for dark theme -->
-    <color name="background_adaptive">@color/background_dark</color>
-    <color name="text_primary">@color/white</color>
-    <color name="text_secondary">#FFAAAAAA</color>
-    <color name="card_background">#FF1A1A2E</color>
-    <color name="divider">#FF333344</color>
-</resources>
