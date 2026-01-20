@@ -12,4 +12,47 @@
     <string name="notification_title">Pentagram AirPlay Receiver</string>
     <string name="notification_text">Ready to receive AirPlay streams</string>
     <string name="connection_note">Note: macOS requires full cryptographic verification.\nConnection will fail at pair-verify step without complete Ed25519 signature implementation.</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_title">Welcome to Pentagram</string>
+    <string name="onboarding_welcome_desc">Stream your Mac or iOS screen directly to your Android device using AirPlay</string>
+    <string name="onboarding_connect_title">Easy to Connect</string>
+    <string name="onboarding_connect_desc">Just select your device from Screen Mirroring on your Apple device</string>
+    <string name="onboarding_start_title">Ready to Go</string>
+    <string name="onboarding_start_desc">Make sure both devices are on the same WiFi network, then tap Get Started</string>
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string name="get_started">Get Started</string>
+
+    <!-- Settings -->
+    <string name="settings">Settings</string>
+    <string name="theme">Theme</string>
+    <string name="theme_system">Follow system</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="appearance">Appearance</string>
+    <string name="legal">Legal</string>
+    <string name="support">Support</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="help">Help</string>
+    <string name="send_feedback">Send Feedback</string>
+    <string name="about">About</string>
+    <string name="legal_info">Legal Information</string>
+    <string name="version">Version %1$s</string>
+
+    <!-- Help -->
+    <string name="help_title">Help</string>
+    <string name="help_what_is_airplay">What is AirPlay Mirroring?</string>
+    <string name="help_what_is_airplay_desc">AirPlay is Apple\'s wireless streaming protocol that allows you to mirror your Mac or iOS device screen to compatible receivers. Pentagram turns your Android device into an AirPlay receiver.</string>
+    <string name="help_how_to_connect">How to Connect</string>
+    <string name="help_how_to_connect_desc">1. Ensure both devices are on the same WiFi network\n2. Start the AirPlay service in Pentagram\n3. On your Mac: Click Control Center → Screen Mirroring → Select \"⛧ [Device Name]\"\n4. On iOS: Open Control Center → Screen Mirroring → Select your device\n5. If prompted, enter the PIN shown on your Android device</string>
+    <string name="help_troubleshooting">Troubleshooting</string>
+    <string name="help_troubleshooting_desc">• Device not appearing: Make sure both devices are on the same WiFi network\n• Connection fails: Try restarting the AirPlay service\n• Black screen: Wait a few seconds for the stream to initialize\n• Lag or stuttering: Move closer to your WiFi router</string>
+    <string name="help_limitations">Current Limitations</string>
+    <string name="help_limitations_desc">• Video only - audio streaming is not yet supported\n• Requires same WiFi network (no Bluetooth or direct connection)\n• Screen orientation locks when streaming begins</string>
+
+    <!-- Privacy Policy -->
+    <string name="privacy_policy_title">Privacy Policy</string>
+    <string name="terms_of_service_title">Terms of Service</string>
 </resources>

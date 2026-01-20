@@ -1,0 +1,47 @@
+TERMS OF SERVICE
+
+Last updated: January 2025
+
+Please read these Terms of Service ("Terms") carefully before using the Pentagram AirPlay Receiver application.
+
+ACCEPTANCE OF TERMS
+
+By downloading, installing, or using Pentagram, you agree to be bound by these Terms. If you do not agree to these Terms, do not use the application.
+
+LICENSE
+
+Pentagram is free software licensed under the GNU General Public License version 3 (GPL v3). You are free to:
+- Use the software for any purpose
+- Study how the software works and modify it
+- Redistribute copies of the software
+- Distribute copies of your modified versions
+
+The full license text is available at: https://www.gnu.org/licenses/gpl-3.0.html
+
+DISCLAIMER OF WARRANTIES
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+
+LIMITATION OF LIABILITY
+
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+AIRPLAY AND TRADEMARKS
+
+AirPlay is a trademark of Apple Inc. Pentagram is not affiliated with, endorsed by, or sponsored by Apple Inc.
+
+ACCEPTABLE USE
+
+You agree to use Pentagram only for lawful purposes and in accordance with these Terms. You agree not to:
+- Use the app to infringe on others' intellectual property rights
+- Attempt to reverse engineer or modify the app in ways that violate the GPL v3 license
+- Use the app in any way that could damage, disable, or impair the app
+
+CHANGES TO TERMS
+
+We reserve the right to modify these Terms at any time. We will notify users of any material changes by updating the "Last updated" date.
+
+CONTACT US
+
+If you have any questions about these Terms, please contact us through our GitHub repository:
+https://github.com/markcipolla/pentagram

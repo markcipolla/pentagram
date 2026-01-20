@@ -1,0 +1,40 @@
+PRIVACY POLICY
+
+Last updated: January 2025
+
+Pentagram ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we handle information when you use our Pentagram AirPlay Receiver application.
+
+INFORMATION WE COLLECT
+
+Pentagram does not collect, store, or transmit any personal information. The app operates entirely on your local device and network.
+
+NETWORK COMMUNICATION
+
+The app communicates only within your local WiFi network to receive AirPlay streams from your Apple devices. No data is sent to external servers or third parties.
+
+DATA STORAGE
+
+- No user data is stored on external servers
+- Preferences (such as theme settings) are stored locally on your device
+- No analytics or tracking data is collected
+
+THIRD-PARTY SERVICES
+
+Pentagram does not use any third-party analytics, advertising, or tracking services.
+
+CHILDREN'S PRIVACY
+
+Our app does not collect any personal information from anyone, including children under 13 years of age.
+
+CHANGES TO THIS POLICY
+
+We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.
+
+CONTACT US
+
+If you have any questions about this Privacy Policy, please contact us through our GitHub repository:
+https://github.com/markcipolla/pentagram
+
+OPEN SOURCE
+
+Pentagram is open source software licensed under the GNU General Public License v3. You can review the source code to verify our privacy practices.

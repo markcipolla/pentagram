@@ -137,12 +137,12 @@ class AirPlayService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.d(TAG, "AirPlay Service started")
 
-        // Start as foreground service with connected device type (for network streaming)
+        // Start as foreground service with media playback type (for video streaming)
         ServiceCompat.startForeground(
             this,
             NOTIFICATION_ID,
             createNotification(),
-            ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE
+            ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
         )
 
         // Start AirPlay server

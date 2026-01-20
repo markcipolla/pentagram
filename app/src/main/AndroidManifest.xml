@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
@@ -23,6 +23,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pentagram"
         tools:targetApi="31">
+
+        <!-- Onboarding Activity (shown on first launch) -->
+        <activity
+            android:name=".OnboardingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Pentagram.Onboarding" />
 
         <!-- Main Activity -->
         <activity
@@ -42,19 +48,39 @@
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
 
+        <!-- Settings Activity -->
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:label="@string/settings"
+            android:theme="@style/Theme.Pentagram.ActionBar" />
+
+        <!-- Help Activity -->
+        <activity
+            android:name=".HelpActivity"
+            android:exported="false"
+            android:label="@string/help"
+            android:theme="@style/Theme.Pentagram.ActionBar" />
+
+        <!-- Privacy Policy Activity -->
+        <activity
+            android:name=".PrivacyPolicyActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Pentagram.ActionBar" />
+
         <!-- Legal Information Activity (Required for GPL v3 compliance) -->
         <activity
             android:name=".LegalInfoActivity"
             android:exported="false"
-            android:label="About"
-            android:theme="@style/Theme.AppCompat.Light" />
+            android:label="@string/legal_info"
+            android:theme="@style/Theme.Pentagram.ActionBar" />
 
         <!-- AirPlay Service -->
         <service
             android:name=".service.AirPlayService"
             android:enabled="true"
             android:exported="false"
-            android:foregroundServiceType="connectedDevice" />
+            android:foregroundServiceType="mediaPlayback" />
 
     </application>
 

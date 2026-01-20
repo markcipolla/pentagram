@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var pinLabelText: TextView
     private lateinit var instructionsText: TextView
     private lateinit var wizardImage: ImageView
+    private lateinit var preferencesManager: PreferencesManager
 
     private var isServiceRunning = false
     private var connectionState = ConnectionState.DISCONNECTED
@@ -65,7 +66,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Apply saved theme before super.onCreate
+        preferencesManager = PreferencesManager(this)
+        preferencesManager.applyTheme()
+
         super.onCreate(savedInstanceState)
+
+        // Check if onboarding needs to be shown
+        if (!preferencesManager.isOnboardingCompleted) {
+            startActivity(Intent(this, OnboardingActivity::class.java))
+            finish()
+            return
+        }
+
         setContentView(R.layout.activity_main)
 
         toggleServiceButton = findViewById(R.id.toggleServiceButton)
@@ -240,6 +253,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.action_settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
+                true
+            }
             R.id.action_about -> {
                 startActivity(Intent(this, LegalInfoActivity::class.java))
                 true
