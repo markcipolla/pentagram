@@ -116,11 +116,11 @@ dependencies {
     implementation("org.bouncycastle:bcprov-jdk15on:1.70")
 
     // Conscrypt - Google's OpenSSL provider (same crypto as RPiPlay!)
-    implementation("org.conscrypt:conscrypt-android:2.5.2")
+    implementation("org.conscrypt:conscrypt-android:2.5.3")
 
     // Libsodium - Native C crypto library for X25519/Ed25519 (OpenSSL compatible!)
-    implementation("com.goterl:lazysodium-android:5.1.0@aar")
-    implementation("net.java.dev.jna:jna:5.13.0@aar")
+    implementation("com.goterl:lazysodium-android:5.2.0@aar")
+    implementation("net.java.dev.jna:jna:5.17.0@aar")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:5.8.0")

@@ -29,6 +29,9 @@ add_library(airplay_crypto SHARED
         fairplay_jni.c
         mirror_buffer_jni.c)
 
+# Ensure 16 KB page alignment (required for Android 15+)
+target_link_options(airplay_crypto PRIVATE "LINKER:-z,max-page-size=16384")
+
 # Link libraries
 # Link against Conscrypt to get BoringSSL symbols
 target_link_libraries(airplay_crypto
