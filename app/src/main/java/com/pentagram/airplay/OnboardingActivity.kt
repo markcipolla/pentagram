@@ -1,6 +1,7 @@
 package com.pentagram.airplay
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -59,6 +60,11 @@ class OnboardingActivity : AppCompatActivity() {
         setupViewPager()
         setupIndicators()
         setupButtons()
+
+        // On TV, give initial D-pad focus to the next button
+        if (packageManager.hasSystemFeature(PackageManager.FEATURE_LEANBACK)) {
+            nextButton.requestFocus()
+        }
     }
 
     private fun setupViewPager() {

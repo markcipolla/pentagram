@@ -11,6 +11,8 @@ import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import androidx.core.app.ActivityCompat
@@ -20,6 +22,10 @@ import com.pentagram.airplay.service.AirPlayService
 import com.pentagram.airplay.service.AirPlayCryptoNative
 
 class MainActivity : AppCompatActivity() {
+
+    private fun isRunningOnTv(): Boolean {
+        return packageManager.hasSystemFeature(PackageManager.FEATURE_LEANBACK)
+    }
 
     private lateinit var toggleServiceButton: MaterialButton
     private lateinit var statusText: TextView
@@ -98,11 +104,29 @@ class MainActivity : AppCompatActivity() {
             .load(R.drawable.wizard_pentagram)
             .into(wizardImage)
 
+        // On TV, resize wizard image to bottom-right corner (max 2/5 of screen)
+        if (isRunningOnTv()) {
+            val constraintLayout = findViewById<ConstraintLayout>(R.id.main_layout)
+            val constraintSet = ConstraintSet()
+            constraintSet.clone(constraintLayout)
+
+            // Clear start constraint, keep only end (right) and bottom
+            constraintSet.clear(R.id.wizardImage, ConstraintSet.START)
+            constraintSet.connect(R.id.wizardImage, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
+            constraintSet.connect(R.id.wizardImage, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
+
+            // Constrain to max 40% of parent height and width
+            constraintSet.constrainPercentHeight(R.id.wizardImage, 0.4f)
+            constraintSet.constrainPercentWidth(R.id.wizardImage, 0.4f)
+
+            constraintSet.applyTo(constraintLayout)
+        }
+
         // Register this activity for PIN display
         currentActivity = this
 
-        // Request notification permission for Android 13+
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        // Request notification permission for Android 13+ (skip on TV — not applicable)
+        if (!isRunningOnTv() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(
                     this,
                     Manifest.permission.POST_NOTIFICATIONS
@@ -114,6 +138,11 @@ class MainActivity : AppCompatActivity() {
                     NOTIFICATION_PERMISSION_REQUEST_CODE
                 )
             }
+        }
+
+        // On TV, give initial D-pad focus to the toggle button
+        if (isRunningOnTv()) {
+            toggleServiceButton.requestFocus()
         }
 
         toggleServiceButton.setOnClickListener {
