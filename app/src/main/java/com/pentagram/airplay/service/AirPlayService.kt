@@ -51,6 +51,7 @@ class AirPlayService : Service() {
         private const val PREFS_NAME = "airplay_keys"
         private const val KEY_ED25519_SEED = "ed25519_seed"
         private const val KEY_ED25519_PUBLIC = "ed25519_public"
+        private const val KEY_DEVICE_ID = "device_id"
 
         init {
             // Install Conscrypt as the primary security provider
@@ -284,28 +285,78 @@ class AirPlayService : Service() {
     }
 
     private fun getMacAddress(): String {
+        // Try to get real MAC address first
         try {
             val interfaces = NetworkInterface.getNetworkInterfaces()
+            val preferredInterfaces = listOf("wlan0", "eth0", "en0", "wifi0")
+
+            for (preferred in preferredInterfaces) {
+                val interfacesCopy = NetworkInterface.getNetworkInterfaces()
+                while (interfacesCopy.hasMoreElements()) {
+                    val networkInterface = interfacesCopy.nextElement()
+                    if (networkInterface.name.equals(preferred, ignoreCase = true)) {
+                        val mac = networkInterface.hardwareAddress
+                        if (mac != null && mac.size == 6 && !mac.all { it == 0.toByte() }) {
+                            val sb = StringBuilder()
+                            for (i in mac.indices) {
+                                sb.append(String.format("%02X", mac[i]))
+                                if (i < mac.size - 1) sb.append(":")
+                            }
+                            Log.d(TAG, "Using real MAC from ${networkInterface.name}: $sb")
+                            return sb.toString()
+                        }
+                    }
+                }
+            }
+
             while (interfaces.hasMoreElements()) {
                 val networkInterface = interfaces.nextElement()
-                if (networkInterface.name.equals("wlan0", ignoreCase = true)) {
-                    val mac = networkInterface.hardwareAddress
-                    if (mac != null) {
-                        val sb = StringBuilder()
-                        for (i in mac.indices) {
-                            sb.append(String.format("%02X", mac[i]))
-                            if (i < mac.size - 1) {
-                                sb.append(":")
-                            }
-                        }
-                        return sb.toString()
+                if (networkInterface.isLoopback || networkInterface.isVirtual) continue
+                val mac = networkInterface.hardwareAddress
+                if (mac != null && mac.size == 6 && !mac.all { it == 0.toByte() }) {
+                    val sb = StringBuilder()
+                    for (i in mac.indices) {
+                        sb.append(String.format("%02X", mac[i]))
+                        if (i < mac.size - 1) sb.append(":")
                     }
+                    Log.d(TAG, "Using real MAC from ${networkInterface.name}: $sb")
+                    return sb.toString()
                 }
             }
         } catch (e: Exception) {
             Log.e(TAG, "Failed to get MAC address", e)
         }
-        return "00:00:00:00:00:00"
+
+        // Android 10+ restricts MAC access - use persistent random device ID
+        return getOrCreatePersistentDeviceId()
+    }
+
+    private fun getOrCreatePersistentDeviceId(): String {
+        val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        var deviceId = prefs.getString(KEY_DEVICE_ID, null)
+
+        if (deviceId == null) {
+            // Generate random MAC-like device ID (locally administered address)
+            val random = java.security.SecureRandom()
+            val bytes = ByteArray(6)
+            random.nextBytes(bytes)
+            // Set locally administered bit and clear multicast bit
+            bytes[0] = ((bytes[0].toInt() and 0xFC) or 0x02).toByte()
+
+            val sb = StringBuilder()
+            for (i in bytes.indices) {
+                sb.append(String.format("%02X", bytes[i]))
+                if (i < bytes.size - 1) sb.append(":")
+            }
+            deviceId = sb.toString()
+
+            prefs.edit().putString(KEY_DEVICE_ID, deviceId).apply()
+            Log.i(TAG, "Generated persistent device ID: $deviceId")
+        } else {
+            Log.d(TAG, "Using existing device ID: $deviceId")
+        }
+
+        return deviceId
     }
 
     private fun generatePublicKey(): String {
