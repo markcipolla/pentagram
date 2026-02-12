@@ -32,8 +32,8 @@ android {
         applicationId = "com.pentagram.airplay"
         minSdk = 24
         targetSdk = 35
-        versionCode = 6
-        versionName = "1.0.5"
+        versionCode = 7
+        versionName = "1.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
