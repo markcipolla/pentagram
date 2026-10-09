@@ -15,7 +15,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.pentagram.airplay"
-    compileSdk = 35
+    compileSdk = 36
 
     signingConfigs {
         create("release") {
@@ -31,7 +31,7 @@ android {
     defaultConfig {
         applicationId = "com.pentagram.airplay"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 7
         versionName = "1.1.0"
 
