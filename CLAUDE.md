@@ -163,8 +163,8 @@ osascript trigger-airplay.scpt "Device Name"
 
 - **Namespace:** `com.pentagram.airplay`
 - **Min SDK:** 24 (Android 7.0)
-- **Target SDK:** 35
-- **Compile SDK:** 35
+- **Target SDK:** 36
+- **Compile SDK:** 36
 - **NDK Version:** 25.2.9519653
 - **CMake Version:** 3.22.1
 - **Kotlin:** 1.9.20
